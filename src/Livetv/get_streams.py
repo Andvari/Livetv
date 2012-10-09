@@ -12,7 +12,6 @@ def get_streams(page):
     i=0
     num_active_streams = 0;
     for line in lines:
-        line = line.replace("&ndash;","-")
         tour[i] = line[1:]
         pos   = tour[i].find('"')
         tour[i] = tour[i][ : pos]
