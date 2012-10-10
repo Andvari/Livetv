@@ -18,6 +18,7 @@ import urllib, urllib2, re
 from get_streams import *
 
 log = open("livetv.log", "wb")
+out_file = open("ready_streams.log", "wb")
 
 url = "http://livetv.ru"
 request = urllib2.urlopen(url)
@@ -27,18 +28,57 @@ page = page[page.find("\xf1\xe5\xe3\xee\xe4\xed\xff") : ]
 page = page[ : page.find("/allupcoming/")]
 page = page.replace("&ndash;", "-")
 
-get_streams(page)
+get_eventinfo(page)
+
+log = open("livetv1.log", "wb")
 
 for i in live:
     print str(live[i]) + " " + links[live[i]]
     req = urllib2.urlopen(links[live[i]])
     page = req.read()
     
-    liveurl = re.compile('http://www8.(.*?)\">').findall(page)
+    '''
+    webplayer      = re.compile('http://www8.livetv.ru/webplayer.php(.*?)\">').findall(page)
+    for link in webplayer:
+        print link
+    '''
     
+    webplayer2     = re.compile('http://www8.livetv.ru/webplayer2.php(.*?)\">').findall(page)
+    for link in webplayer2:
+        url = "http://www8.livetv.ru/webplayer2.php" + link
+        req = urllib2.urlopen(url)
+        page = req.read()
+        log.write(page)
+        log.write("\n=======================n")
+    
+    '''
+    redirects = re.compile('redirects/play.php(.*?)\">').findall(page)
+    for link in redirects:
+        print link
+    '''
+    
+    '''
+    bet365    = re.compile('bet365.com/home/(.*?)\">').findall(page)
+    for link in bet365:
+        url = "http://www.bet365.com/home/" + link
+        req = urllib2.urlopen(url)
+        page = req.read()
+        log.write(page)
+        log.write("\n=======================n")
+    '''
+        
+
+    '''
+    bwin      = re.compile('bwin.com/(.*?)\">').findall(page)
+    for link in bwin:
+        print link
+    '''
+        
+        
+    '''
     j=0
-    for link in liveurl:
-        url = "http://www8." + link
+    for link in www8:
+        url = "http://www8.livetv.ru/" + link
         req = urllib2.urlopen(url)
         lpage = req.read()
         
@@ -72,7 +112,7 @@ for i in live:
             log.write(page)
             log.close()
         j+=1
-
+    '''
 '''
 
 print page
