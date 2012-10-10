@@ -48,8 +48,32 @@ for i in live:
         url = "http://www8.livetv.ru/webplayer2.php" + link
         req = urllib2.urlopen(url)
         page = req.read()
-        log.write(page)
-        log.write("\n=======================n")
+        page = page.upper()
+        
+        log.write("\n1===")
+        log.write(url.encode('utf-8'))
+        log.write("====\n")
+        page = page[ page.find('BROWSERDETECT.BROWSER'): ]
+        page = page[ : page.find('\"></IFRAME')]
+        
+        url = page[ page.rfind('SRC=') + 12 : ]
+        
+        if(url.find('WWW') == -1):
+            url = "WWW." + url
+            
+        url = "HTTP://" + url
+        
+        url = url.lower()
+        
+        #print url
+        
+        req  = urllib2.urlopen(url)
+        page = req.read()
+        
+        log.write("\n2===")
+        log.write(url.encode('utf-8'))
+        log.write("====\n")
+        log.write(page.encode('utf-8'))
     
     '''
     redirects = re.compile('redirects/play.php(.*?)\">').findall(page)
