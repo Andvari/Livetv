@@ -37,14 +37,16 @@ for i in live:
     req = urllib2.urlopen(links[live[i]])
     page = req.read()
     
-    '''
+    
     webplayer      = re.compile('http://www8.livetv.ru/webplayer.php(.*?)\">').findall(page)
     for link in webplayer:
         print link
-    '''
+    
     
     webplayer2     = re.compile('http://www8.livetv.ru/webplayer2.php(.*?)\">').findall(page)
     for link in webplayer2:
+        print link
+        '''
         url = "http://www8.livetv.ru/webplayer2.php" + link
         req = urllib2.urlopen(url)
         page = req.read()
@@ -74,6 +76,7 @@ for i in live:
         log.write(url.encode('utf-8'))
         log.write("====\n")
         log.write(page.encode('utf-8'))
+        '''
     
     '''
     redirects = re.compile('redirects/play.php(.*?)\">').findall(page)
