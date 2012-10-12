@@ -16,6 +16,7 @@ print p[0].pop()
 
 import urllib, urllib2, re
 from get_streams import *
+from letontv import *
 
 log = open("livetv.log", "wb")
 out_file = open("ready_streams.log", "wb")
@@ -45,7 +46,13 @@ for i in live:
     
     webplayer2     = re.compile('http://www8.livetv.ru/webplayer2.php(.*?)\">').findall(page)
     for link in webplayer2:
-        print link
+        
+        url = "http://www8.livetv.ru/webplayer2.php" + link
+        print url
+        
+        if(url.find('t=letontv') != -1 ):
+            stream_letontv(url)
+        
         '''
         url = "http://www8.livetv.ru/webplayer2.php" + link
         req = urllib2.urlopen(url)
